@@ -1,24 +1,19 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'Screens/HomeView.dart';
+import 'Screens/home_view.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+// ignore: use_key_in_widget_constructors
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Word Converter',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: HomeView(),
-    );
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Caesar cipher',
+        home: HomeView()
+        // HomeView(),
+        );
   }
 }

@@ -1,41 +1,49 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
+
+import 'package:cyber/Algrothims/const.dart';
 import 'package:flutter/material.dart';
 
-import '../Algrothims/algrothim_one.dart';
+import '../Algrothims/algrothim_affine.dart';
 import 'Dialog.dart';
 
-class Decryption extends StatefulWidget {
+class DecryptionAffine extends StatefulWidget {
   @override
-  _DecryptionState createState() => _DecryptionState();
+  _DecryptionAffineState createState() => _DecryptionAffineState();
 }
 
-class _DecryptionState extends State<Decryption> {
+class _DecryptionAffineState extends State<DecryptionAffine> {
   final formKey = GlobalKey<FormState>();
   String? word;
-  int? keyNumber;
-  final controller1=TextEditingController();
+  int? keyAlpha;
+  int? keyBeta;
+  final controller1 = TextEditingController();
 
-  final controller2=TextEditingController();
-
+  final controller2 = TextEditingController();
+  final controller3 = TextEditingController();
   void submitForm() {
-
     if (formKey.currentState!.validate()) {
-
       formKey.currentState!.save();
       showDialog(
         context: context,
         builder: (context) {
           return buildDialog(
+            keyBeta: keyBeta!,
+            isCaesar: false,
             word: word!,
-            keyNumber: keyNumber!,
+            keyNumber: keyAlpha!,
             title: 'Decrypted Word',
-            newWord: Algorithm().decyrption(keyNumber!, word!),
+            newWord: charactersEn.contains(word![0])
+                ? AlgorithmAffine()
+                    .decyrptionAffine(keyAlpha!, keyBeta!, word!, 26)
+                : AlgorithmAffine()
+                    .decyrptionAffine(keyAlpha!, keyBeta!, word!, 28),
           );
         },
       );
       controller1.clear();
       controller2.clear();
-
+      controller3.clear();
+   
     }
   }
 
@@ -45,9 +53,9 @@ class _DecryptionState extends State<Decryption> {
       key: formKey,
       child: Column(
         children: [
-          const SizedBox(height: 35),
+          const SizedBox(height: 30),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
             child: TextFormField(
               controller: controller1,
               validator: (value) {
@@ -59,10 +67,14 @@ class _DecryptionState extends State<Decryption> {
               decoration: const InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.green, width: 2.0),
-                ), //hintInp,
-                labelText: 'Enter Word',
-                labelStyle:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                ), // hintInp,
+
+                label: Text(
+                  'Enter Word',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey),
+                ),
+
                 border: OutlineInputBorder(),
               ),
               onSaved: (value) {
@@ -71,12 +83,12 @@ class _DecryptionState extends State<Decryption> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
             child: TextFormField(
               controller: controller2,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter an key';
+                  return 'Please enter an alpha key';
                 }
                 return null;
               },
@@ -86,23 +98,47 @@ class _DecryptionState extends State<Decryption> {
                   borderSide: BorderSide(color: Colors.green, width: 2.0),
                 ), // hintInp,
 
-
                 label: Text(
-                  'Enter Key',
+                  'Enter Alpha Key',
                   style: TextStyle(
-
                       fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
 
                 border: OutlineInputBorder(),
               ),
               onSaved: (value) {
-                keyNumber = int.parse(value!);
-
+                keyAlpha = int.parse(value!);
               },
             ),
           ),
-          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+            child: TextFormField(
+              controller: controller3,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter an beta key';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green, width: 2.0),
+                ), // hintInp,
+                label: Text(
+                  'Enter Beta Key',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey),
+                ),
+                border: OutlineInputBorder(),
+              ),
+              onSaved: (value) {
+                keyBeta = int.parse(value!);
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: submitForm,
             child: Container(
@@ -110,7 +146,7 @@ class _DecryptionState extends State<Decryption> {
               width: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(255, 138, 137, 137),
+                color: Colors.grey,
               ),
               child: const Center(
                 child: Text(
@@ -124,6 +160,7 @@ class _DecryptionState extends State<Decryption> {
               ),
             ),
           ),
+          const Spacer(),
         ],
       ),
     );

@@ -1,22 +1,25 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: library_private_types_in_public_api
+import 'package:cyber/Algrothims/algrothim_caesar.dart';
+import 'package:cyber/Algrothims/const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../Algrothims/algrothim_one.dart';
 import 'Dialog.dart';
 
-class Encryption extends StatefulWidget {
+class DecryptionCaesar extends StatefulWidget {
+  const DecryptionCaesar({super.key});
+
   @override
-  _EncryptionState createState() => _EncryptionState();
+  _DecryptionCaesarState createState() => _DecryptionCaesarState();
 }
 
-class _EncryptionState extends State<Encryption> {
+class _DecryptionCaesarState extends State<DecryptionCaesar> {
   final formKey = GlobalKey<FormState>();
   String? word;
   int? keyNumber;
   final controller1 = TextEditingController();
 
   final controller2 = TextEditingController();
+
   void submitForm() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -24,15 +27,18 @@ class _EncryptionState extends State<Encryption> {
         context: context,
         builder: (context) {
           return buildDialog(
+            keyBeta: 0,
+            isCaesar: true,
             word: word!,
             keyNumber: keyNumber!,
-            title: 'Encrypted Word',
-            newWord: Algorithm().encyrption(keyNumber!, word!),
+            title: 'Decrypted Word',
+            newWord: charactersEn.contains(word![0])
+                ? AlgorithmCaesar().decyrptionCaesar(keyNumber!, word!, 26)
+                : AlgorithmCaesar().decyrptionCaesar(keyNumber!, word!, 28),
           );
         },
       );
       controller1.clear();
-
       controller2.clear();
     }
   }
@@ -44,9 +50,8 @@ class _EncryptionState extends State<Encryption> {
       child: Column(
         children: [
           const SizedBox(height: 35),
-          // const SizedBox(height: 25),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
             child: TextFormField(
               controller: controller1,
               validator: (value) {
@@ -58,14 +63,10 @@ class _EncryptionState extends State<Encryption> {
               decoration: const InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.green, width: 2.0),
-                ), // hintInp,
-
-                label: Text(
-                  'Enter Word',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.grey),
-                ),
-
+                ), //hintInp,
+                labelText: 'Enter Word',
+                labelStyle:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
                 border: OutlineInputBorder(),
               ),
               onSaved: (value) {
@@ -110,11 +111,11 @@ class _EncryptionState extends State<Encryption> {
               width: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
+                color: const Color.fromARGB(255, 138, 137, 137),
               ),
               child: const Center(
                 child: Text(
-                  'Encrypt',
+                  'Decrypt',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,

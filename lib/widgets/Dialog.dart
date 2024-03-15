@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: camel_case_types, prefer_const_constructors
 
-import '../Algrothims/algrothim_one.dart';
+import 'package:flutter/material.dart';
 
 class buildDialog extends StatelessWidget {
   const buildDialog(
@@ -9,150 +8,31 @@ class buildDialog extends StatelessWidget {
       required this.word,
       required this.keyNumber,
       required this.title,
-      required this.newWord});
+      required this.newWord,
+      required this.isCaesar,
+      required this.keyBeta});
   final String word;
   final int keyNumber;
+  final int keyBeta;
   final String title;
   final String newWord;
+  final bool isCaesar;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
         title,
-        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 25.5, fontWeight: FontWeight.bold),
       ),
-      content: Container(
-        height: 165,
-
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5),
-            Text(
-              'Word : $word\nNew  : $newWord\nKey   : $keyNumber',
-              style: const TextStyle(
-                  fontSize: 22, fontWeight: FontWeight.w500, color: Colors.black),
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  Algorithm().characters[0],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[1],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[2],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[3],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[4],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[5],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[6],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[7],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[8],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[9],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[10],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[11],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[12],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  Algorithm().characters[13],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[14],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[15],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[16],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[17],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[18],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[19],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[20],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[21],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[22],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[23],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[24],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Algorithm().characters[25],
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
-        ),
+      content: Text(
+        'Plain  : $word\nCipher  : $newWord'
+        '${isCaesar ? "\nKey   : $keyNumber " : '\nAlpha   : $keyNumber\nBate   : $keyBeta'}',
+        style: const TextStyle(
+            fontSize: 22, fontWeight: FontWeight.w500, color: Colors.black),
       ),
+      // Algorithm().charactersEn.contains(word[0])?
+
       actions: [
         TextButton(
           onPressed: () {
@@ -160,7 +40,11 @@ class buildDialog extends StatelessWidget {
           },
           child: const Text(
             'OK',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Color.fromARGB(179, 51, 4, 116),
+            ),
           ),
         ),
       ],
